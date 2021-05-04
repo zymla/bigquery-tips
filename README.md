@@ -1,4 +1,9 @@
 # bigquery-tips
+```
+auth
+gcloud auth login
+gcloud auth application-default login
+```
 ## Print cost of last query
 ```
 from google.cloud import bigquery
