@@ -13,3 +13,14 @@ print(round(list(client.list_jobs(max_results=1))[0].total_bytes_billed/1e12*5, 
 ```
 ## Select all columns except some
 `SELECT * EXCEPT(col1, col2)`
+
+## First row in GROUP
+Watch out for duplicates as `RANK()` gives same value to ties
+```
+SELECT * EXCEPT(rk) FROM (
+  SELECT partition_key, ordering_column, other_col_1, other_col_2, 
+    RANK() OVER(PARTITION BY partition_key ORDER BY ordering_column, other_col_1,other_col_2) AS rk
+  FROM my_table
+)
+WHERE rk = 1
+```
